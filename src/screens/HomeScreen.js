@@ -9,6 +9,7 @@ import {
   Image,
   FlatList,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
@@ -19,7 +20,7 @@ import { colors, parameters } from '../global/styles';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [latlng, setLatLng] = useState({});
 
   const checkPermission = async () => {
@@ -54,11 +55,12 @@ const HomeScreen = () => {
   useEffect(() => {
     checkPermission();
     getLocation();
-    console.log(latlng);
+    // console.log(latlng);
   }, []);
 
   return (
     <View style={styles.container}>
+      <StatusBar />
       <View style={styles.header}>
         <View style={styles.icon1}>
           <Icon
@@ -70,7 +72,7 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      <ScrollView bounces={false} style={{ marginBottom: 150 }}>
+      <ScrollView bounces={false}>
         <View style={styles.home}>
           <Text style={styles.text1}>Destress your commute</Text>
           <View style={styles.view1}>
@@ -78,9 +80,15 @@ const HomeScreen = () => {
               <Text style={styles.text2}>
                 Read a book. Take a nap. Stare out the window
               </Text>
-              <View style={styles.button1}>
-                <Text style={styles.button1Text}>Ride with Uber</Text>
-              </View>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('RequestScreen', { state: 0 });
+                }}
+              >
+                <View style={styles.button1}>
+                  <Text style={styles.button1Text}>Ride with Uber</Text>
+                </View>
+              </TouchableOpacity>
             </View>
 
             <View>
@@ -230,6 +238,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: colors.white,
     paddingBottom: 30,
     paddingTop: parameters.statusBarHeight,

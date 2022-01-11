@@ -1,12 +1,19 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { Text, View } from 'react-native';
-import HomeScreen from './src/screens/HomeScreen';
+import RootNavigator from './src/navigations/RootNavigator';
+import {
+  OriginContextProvider,
+  DestinationContextProvider,
+} from './src/contexts/context';
 
 const App = () => {
   return (
-    <View>
-      <HomeScreen />
-    </View>
+    <DestinationContextProvider>
+      <OriginContextProvider>
+        <RootNavigator />
+      </OriginContextProvider>
+    </DestinationContextProvider>
   );
 };
 
